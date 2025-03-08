@@ -14,26 +14,3 @@ services:
       LDAP_DOMAIN: "min.io"
       LDAP_ADMIN_PASSWORD: "admin"
     command: "--copy-service"
-  dex:
-    image: quay.io/minio/dex:latest
-    ports:
-      - "15556:5556"
-    environment:
-      DEX_CLIENT_REDIRECT_URI: "http://nginx:10000/oauth_callback"
-      DEX_ISSUER: "http://dex:5556/dex"
-      DEX_LDAP_SERVER: "ldap:389"
-  dex2:
-    image: quay.io/minio/dex:latest
-    ports:
-      - "15557:5557"
-    environment:
-      DEX_CLIENT_REDIRECT_URI: "http://nginx:10000/oauth_callback"
-      DEX_ISSUER: "http://dex2:5557/dex"
-      DEX_LDAP_SERVER: "ldap:389"
-      DEX_WEB_HTTP: "0.0.0.0:5557"
-  nginx:
-    image: nginx
-    ports:
-      - "20000:10000"
-    volumes:
-      - "./nginx-lb.conf:/etc/nginx/nginx.conf:ro"
